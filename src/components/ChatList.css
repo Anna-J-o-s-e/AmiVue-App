@@ -1,0 +1,103 @@
+/* Styles scoped to the ChatList component */
+
+/* Chat List Container */
+.chat-list-container {
+  max-width: 700px;
+  margin: 50px auto; /* Moves it down */
+  padding: 20px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #156c6f61, #1ac8c5c9);
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  margin-top: 90px;
+}
+
+/* Header */
+.chat-list-container h2 {
+  font-size: 22px;
+  color: #333;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+/* Chat List */
+.chat-list-container .chat-list {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 10px;
+}
+
+/* Chat Item */
+.chat-list-container .chat-item {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  border-radius: 8px;
+  margin: 8px 0;
+  background: #fff;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.chat-list-container .chat-item:hover {
+  background: #eef3ff;
+  transform: scale(1.02);
+}
+
+/* Profile Picture */
+.chat-list-container .profile-pic {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 12px;
+  border: 2px solid #4a90e2;
+}
+
+/* Chat Info (Full Name & Username) */
+.chat-list-container .chat-info {
+  display: flex;
+  flex-direction: column; /* Ensures they appear in two separate lines */
+  text-align: left;
+}
+
+/* Full Name */
+.chat-list-container .full-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+}
+
+/* Username */
+.chat-list-container .username {
+  font-size: 14px;
+  color: #666;
+  margin-top: 3px;
+}
+
+.new-message-badge {
+  background-color: rgb(28, 175, 188);
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 5px 10px;
+  border-radius: 20px;
+  position: absolute;
+  right: 10px; /* Align to the right */
+  top: 50%;
+  transform: translateY(-50%); /* Center vertically */
+}
+
+.chat-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #ddd;
+  position: relative;
+}
+
+.chat-item.unread {
+  background-color: #f7f7f7; /* Highlight unread messages */
+  font-weight: bold;
+}

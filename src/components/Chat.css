@@ -1,0 +1,103 @@
+/* Ensure styles apply only to the Chat component */
+.chat-page .chat-container {
+    max-width: 1000px;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background: #fff;
+    margin-top: 100px;
+    display: flex;
+    flex-direction: column;
+    max-height: 1500px;
+}
+
+.chat-page .chat-box {
+    height: 320px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-page .message-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 10px;
+}
+
+.chat-page .message-bubble {
+    padding: 8px 12px;
+    border-radius: 10px;
+    max-width: 70%;
+    word-wrap: break-word;
+    display: inline-block;
+}
+
+.chat-page .sent {
+    align-self: flex-end;
+    text-align: left;
+}
+
+.chat-page .sent .message-bubble {
+    background: #f1f1f1;
+    color: rgb(2, 2, 2);
+    margin-left: auto;
+    
+}
+
+.chat-page .received .message-bubble {
+    background: #f1f1f1;
+    align-self: flex-start;
+    text-align: left;
+}
+
+.chat-page .message-info {
+    font-size: 12px;
+    color: gray;
+    margin-top: 3px;
+}
+
+.chat-page .timestamp {
+    margin-right: 5px;
+}
+
+.chat-page .status.read {
+    color: blue;
+}
+
+.chat-page .status.unread {
+    color: gray;
+}
+
+.chat-page .chat-input {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.chat-page .chat-input input {
+    flex-grow: 4 !important;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.chat-page .chat-input button {
+    padding: 5px 10px !important;
+    font-size: 12px;
+    border: none;
+    background-color: #277f81;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    white-space: nowrap;
+}
+
+.chat-page .chat-input button:hover {
+    background-color: #66bacb;
+}

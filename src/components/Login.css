@@ -1,0 +1,121 @@
+/* Dark Elegant Background (Scoped to Login Page) */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: radial-gradient(circle at top, #2bb6d9, #000000);
+  padding: 20px;
+}
+
+/* Glassmorphic Login Box */
+.login-container .login-card {
+  width: 400px;
+  padding: 30px;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.6);
+  text-align: center;
+  transition: transform 0.3s ease-in-out;
+}
+
+.login-container .login-card:hover {
+  transform: scale(1.02);
+  backdrop-filter: none;
+}
+
+/* Login Title */
+.login-container .login-title {
+  
+  font-family: 'Nunito', sans-serif;
+
+  font-size: 26px;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 10px;
+}
+
+/* Input Fields */
+.login-container .form-group {
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.login-container .form-input {
+  width: 100%;
+  height: 45px;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #f7f5f5;
+  outline: none;
+  transition: all 0.3s ease-in-out;
+}
+
+.login-container .form-input:focus {
+  background: rgba(3, 12, 15, 0.2);
+  box-shadow: 0 0 10px rgba(21, 190, 193, 0.3);
+}
+
+/* Error Message */
+.login-container .error-message {
+  color: #ff4c4c;
+  font-size: 14px;
+  font-style: italic;
+  margin-bottom: 10px;
+}
+
+/* Login Button */
+.login-container .login-button {
+  width: 100%;
+  height: 50px;
+  background: linear-gradient(90deg, #3ABFC1, #116466);
+  color: white;
+  font-size: 18px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.login-container .login-button:hover {
+  background: linear-gradient(90deg, #0cc7ca, #82ebed);
+  transform: translateY(-2px);
+}
+
+/* Forgot Password & Signup Links */
+.login-container .link-container {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.login-container .link-container a {
+  color: #3abfc1;
+  text-decoration: underline;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.login-container .link-container a:hover {
+  color: #1a9c9e;
+}
+.forgot-password {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.forgot-password a {
+  color: #fcffff;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.forgot-password a:hover {
+  text-decoration: underline;
+}
+

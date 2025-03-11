@@ -1,0 +1,282 @@
+/* Dark Elegant Background (Scoped to Professional SignUp Page) */
+.proffessional-signup-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 150vh;
+    background: radial-gradient(circle at top, #2bb6d9, #000000);
+    padding: 20px;
+}
+  
+.proffessional-signup-container .error-text {
+    color: #218f9e !important; /* Light greyish white color */
+    font-size: 14px !important;
+    font-style: italic !important;
+}
+
+/* Glassmorphic Professional Signup Box */
+.proffessional-signup-container .signup-box {
+    width: 700px;
+    padding: 40px;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.6);
+    text-align: center;
+    transition: transform 0.3s ease-in-out;
+}
+
+.proffessional-signup-container .signup-box:hover {
+    transform: scale(1.02);
+    backdrop-filter: none;
+}
+
+/* Signup Title & Subtitle */
+.proffessional-signup-container .signup-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 26px;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 5px;
+}
+
+.proffessional-signup-container .signup-subtitle {
+    font-size: 14px;
+    color: #aaaaaa;
+    margin-bottom: 20px;
+}
+
+/* Profile Picture */
+.proffessional-signup-container .profile-picture-container {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.proffessional-signup-container .profile-picture {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #3abfc1;
+}
+
+.proffessional-signup-container .profile-upload {
+    margin-top: 10px;
+    color: #ffffff;
+}
+
+/* Two-column Grid Layout for Inputs */
+.proffessional-signup-container .form-grid {
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.proffessional-signup-container .form-column {
+    width: 48%;
+}
+
+/* Input Fields */
+.proffessional-signup-container .signup-input-container {
+    text-align: left;
+    margin-bottom: 15px;
+}
+
+.proffessional-signup-container .signup-input-label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #dddddd;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.proffessional-signup-container .signup-input-box {
+    width: 100%;
+    height: 45px;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #f7f5f5;
+    outline: none;
+    transition: all 0.3s ease-in-out;
+}
+
+.proffessional-signup-container .signup-input-box:focus {
+    background: rgba(3, 12, 15, 0.2);
+    box-shadow: 0 0 10px rgba(21, 190, 193, 0.3);
+}
+
+/* Gender Dropdown Styling */
+.proffessional-signup-container .gender-dropdown {
+    width: 100%;
+    height: 45px;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    background: rgba(21, 120, 148, 0.1);
+    color: #0e7f83;
+    outline: none;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Focus Styling for Gender Dropdown */
+.proffessional-signup-container .gender-dropdown:focus {
+    background: rgba(25, 139, 177, 0.2);
+    box-shadow: 0 0 10px rgba(21, 190, 193, 0.3);
+}
+
+/* Checkbox */
+.proffessional-signup-container .checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    color: #ffffff;
+}
+
+.proffessional-signup-container .checkbox-container input {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+/* Signup Button */
+.proffessional-signup-container .signup-btn {
+    width: 100%;
+    height: 50px;
+    background: linear-gradient(90deg, #3ABFC1, #116466);
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.proffessional-signup-container .signup-btn:hover {
+    background: linear-gradient(90deg, #08999b, #3ABFC1);
+    transform: translateY(-2px);
+}
+
+/* Modal Overlay (Scoped to Professional SignUp page) */
+.proffessional-signup-container .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+/* Modal Content */
+.proffessional-signup-container .modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 400px;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+}
+
+/* Close Button for Modal */
+.proffessional-signup-container .close-modal {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgb(14, 13, 13);
+    color: white;
+    border: none;
+    font-size: 16px;
+    padding: 5px;
+    cursor: pointer;
+}
+
+/* Privacy Policy Paragraph Styling */
+.proffessional-signup-container .modal-content p {
+    font-size: 14px;
+    color: #333333;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    text-align: justify;
+}
+
+.proffessional-signup-container .know-more-link {
+    color: rgb(235, 235, 241);
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+/* Responsive Adjustments for Smaller Screens */
+@media (max-width: 768px) {
+    .proffessional-signup-container .form-grid {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .proffessional-signup-container .signup-box {
+        width: 90%;
+        padding: 20px;
+    }
+
+    .proffessional-signup-container .profile-picture {
+        width: 90px;
+        height: 90px;
+    }
+
+    .proffessional-signup-container .signup-input-box {
+        width: 100%;
+        height: 45px;
+    }
+}
+
+@media (max-width: 480px) {
+    .proffessional-signup-container .signup-btn {
+        font-size: 16px;
+        height: 45px;
+    }
+
+    .proffessional-signup-container .modal-content {
+        width: 90%;
+    }
+
+    .proffessional-signup-container .modal-content h3 {
+        font-size: 1.2rem;
+    }
+
+    .proffessional-signup-container .modal-content p {
+        font-size: 0.9rem;
+    }
+}
+
+/* Years of Experience and Preferred Contact Time Input */
+.proffessional-signup-container .signup-input-container.years-of-experience,
+.proffessional-signup-container .signup-input-container.preferred-contact-time {
+    width: 47%;
+    height:45px;
+}
+
+/* Workplace Input (Increase width for address input) */
+.proffessional-signup-container .signup-input-container.workplace {
+    width: 100%;
+    height: 80px;  /* Adjust height for multiline input */
+}
+
+.proffessional-signup-container .signup-input-box.workplace {
+    height: 80px;
+    resize: vertical; /* Allow vertical resizing */
+}
+
+/* Additional Flexbox for Inputs (Optional for layout improvements) */
+.proffessional-signup-container .form-column.workplace {
+    flex: 1 1 100%;
+}

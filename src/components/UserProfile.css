@@ -1,0 +1,115 @@
+/* UserProfile.css */
+
+/* Background and layout */
+body {
+    background-color: #f8fafa; /* Light grayish background for contrast */
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Profile Container */
+.p-6 {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+    max-width: 60%; /* Makes it span almost full screen */
+    margin: 50px auto; /* Centers the container */
+}
+
+.p-6:hover {
+    transform: translateY(-5px);
+}
+
+/* Profile Header */
+h2 {
+    color: #157a7c;
+    font-size: 1.8rem;
+    font-weight: 600;
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Profile Image */
+.flex {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.w-24 {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 4px solid #92D6D7;
+    transition: transform 0.3s ease-in-out;
+}
+
+.w-24:hover {
+    transform: scale(1.1);
+}
+
+/* Profile Details Container */
+.space-y-2 {
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: 10px;
+    background: rgba(146, 214, 215, 0.1);
+}
+
+/* Individual Textbox Style */
+.profile-detail {
+    background: #ffffff;
+    padding: 14px 25px;
+    border: 1px solid #92D6D7;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    color: #444;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    width: 100%; /* Spans the full width */
+}
+
+/* Label (left side) */
+.profile-detail strong {
+    color: #157a7c;
+    font-weight: 600;
+    min-width: 200px; /* Adjusts label spacing */
+    text-align: center;
+    font-size: 1.1rem;
+}
+
+/* User Details (right side) */
+.profile-detail span {
+    flex-grow: 1;
+    text-align: left;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .p-6 {
+        max-width: 95%;
+    }
+
+    .profile-detail {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 12px;
+    }
+
+    .profile-detail strong {
+        min-width: auto;
+        text-align: center;
+        font-size: 1rem;
+    }
+
+    .profile-detail span {
+        padding-left: 0;
+        margin-top: 5px;
+    }
+}
