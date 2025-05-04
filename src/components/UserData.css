@@ -1,0 +1,101 @@
+/* General wrapper for the UserData page */
+.user-data-container {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    max-width: 1000px;
+    margin: 20px auto;
+    margin-top: 80px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Headings */
+  .user-data-container h2,
+  .user-data-container h3 {
+    text-align: center;
+    color: #0c777c;
+  }
+  
+  .user-data-container h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    
+  }
+  
+  .user-data-container h3 {
+    font-size: 24px;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    
+  }
+  
+  /* User Details Section */
+  .user-details {
+    margin-bottom: 20px;
+  }
+  
+  .user-details div {
+    margin-bottom: 10px;
+    font-size: 16px;
+  }
+  
+  .user-details strong {
+    color: #17839d;
+  }
+  
+  /* Form Styling */
+  .user-data-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .user-data-form label {
+    font-size: 18px;
+    
+    margin-bottom: 5px;
+    color: #495057;
+  }
+  
+ /* Add spacing between radio buttons */
+.radio-group {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Adjust this value for more or less spacing */
+    
+   
+  }
+  
+  .radio-group input[type="radio"] {
+    transform: scale(1.5); 
+    margin-right: 5px;
+    accent-color: rgba(18, 173, 187, 0.721); 
+  }
+  
+  
+  /* Submit Button */
+  .user-data-submit-button {
+    background-color: #15a0b8;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+  .user-data-submit-button:hover {
+    background-color: #1dc3d8;
+  }
+  
+  /* Divider */
+  .user-data-divider {
+    margin: 20px 0;
+    border: 1px solid #e9ecef;
+  }
+  

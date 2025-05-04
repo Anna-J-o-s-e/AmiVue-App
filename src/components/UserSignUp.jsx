@@ -2,6 +2,8 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import "./SignUp.css";
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
 
 const UserSignUp = () => {
   const [data, setData] = useState({
@@ -16,7 +18,7 @@ const UserSignUp = () => {
     profilePicture: "",
     agreePolicy: false
   });
-  
+  const navigate = useNavigate(); 
   const [previewImage, setPreviewImage] = useState(
     "https://static-00.iconduck.com/assets.00/user-icon-1024x1024-dtzturco.png"
   );
@@ -97,6 +99,7 @@ const UserSignUp = () => {
 
         if (response.data.status === "success") {
           alert("Successfully signed up");
+          navigate("/login");
         } else {
           alert("Error signing up");
         }

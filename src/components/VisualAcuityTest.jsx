@@ -16,10 +16,11 @@ const VisualAcuityTest = () => {
     const [testCompleted, setTestCompleted] = useState(false);
     const [correctAnswers, setCorrectAnswers] = useState(0);
     const [showResults, setShowResults] = useState(false);
-    const [isSaving, setIsSaving] = useState(false); // New: Indicates saving state
+    const [isSaving, setIsSaving] = useState(false); 
     const navigate = useNavigate();
 
     useEffect(() => {
+
         fetchNewTest();
     }, []);
 
@@ -106,7 +107,12 @@ const handleSubmit = () => {
   }
 };
 
-
+const handleKeyDown = (e) => {
+        if (e.key === "Enter") {
+            e.preventDefault(); // Prevent form submission if inside a form
+            handleSubmit(); // Trigger submit on Enter key press
+        }
+    };
     
     const saveResults = async (finalResults) => {
         setIsSaving(true); // Indicate saving process
@@ -150,15 +156,7 @@ const handleSubmit = () => {
             <NavBarUser />
             <div className="visual-test-container">
                 <h1 className="visual-test-title">Visual Acuity Test</h1>
-                <div className="instructions">
-                    <h2>Instructions:</h2>
-                    <ul>
-                        <li>Maintain a consistent distance from the screen (about 50 cm - 60 cm).</li>
-                        <li>Avoid coming too close or sitting too far away.</li>
-                        <li>Ensure proper lighting in the room to avoid glare.</li>
-                        <li>Try to respond as quickly as possible for accurate results.</li>
-                    </ul>
-                </div>
+               
                 {!testCompleted ? (
                     <>
                         <div className="visual-test-box" style={{ fontSize: `${size}px` }}>
@@ -167,9 +165,11 @@ const handleSubmit = () => {
                         <input
                             type="text"
                             className="visual-test-input"
-                            placeholder="Enter the digit you see"
+                            placeholder="Enter the letter"
                             value={userInput}
                             onChange={(e) => setUserInput(e.target.value)}
+                            onKeyDown={handleKeyDown}
+                            
                         />
                         <button className="visual-test-button" onClick={handleSubmit} disabled={isSaving}>
                             {isSaving ? "Saving..." : `Submit (${testCount + 1}/${TOTAL_TESTS})`}

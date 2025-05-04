@@ -1,401 +1,336 @@
 import React, { useState, useEffect } from 'react';
-import NavBarUser from './NavBarUser';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import NavBarUser from './NavBarUser';
+import "./UserData.css";
 
 const UserData = () => {
-  const [responses, setResponses] = useState({
-    troubleSeeing: '',
-    historyOfSurgery: '',
-    visionProblems: '',
-    cataracts: '',
-    glaucoma: '',
-    macularDegeneration: '',
-    diabeticRetinopathy: '',
-    visionLimitations: '',
-    alcoholConsumption: '',
-    physicalActivity: '',
-    smokingStatus: '',
-    glucoseLevel: '',
-    cholesterolLevel: '',
+  const navigate = useNavigate();
+  
+  const [userDetails, setUserDetails] = useState({
+    fullName: 'User',
+    gender: 0, // Default: 0 (Unknown), 1 (Male), 2 (Female)
+    dob: 'Unknown',
+    userId: 'Unknown',
+    age: 'Unknown',
   });
 
-  const [userDetails, setUserDetails] = useState({ fullName: "", age: "", gender: "", userId: "" });
+  const [responses, setResponses] = useState({
+    OHQ780A: '', OHQ780B: '', OHQ780C: '', OHQ780D: '', OHQ780E: '', OHQ780F: '',
+    OHQ780G: '', OHQ780H: '', OHQ780I: '', OHQ780J: '', OHQ780K: '',
+    OSQ010A: '', OSQ010B: '', OSQ010C: '',
+    OSQ020A: '', OSQ020B: '', OSQ020C: ''
+  });
 
+  // Fetch user details from localStorage
   useEffect(() => {
+    const fetchUserDetails = () => {
+      try {
+        const userDataString = localStorage.getItem('user');
+        if (!userDataString) return;
+
+        const userData = JSON.parse(userDataString);
+        const fullName = userData?.fullName || 'User';
+        const gender = userData?.gender === 'Male' ? 1 : userData?.gender === 'Female' ? 2 : 0;
+        const dob = userData?.dob;
+        const userId = userData?._id;
+
+        let age = 'Unknown';
+        if (dob) {
+          const birthDate = new Date(dob);
+          const today = new Date();
+          age = today.getFullYear() - birthDate.getFullYear();
+          const monthDiff = today.getMonth() - birthDate.getMonth();
+          if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+          }
+        }
+
+        setUserDetails({ fullName, gender, dob, userId, age });
+      } catch (error) {
+        console.error('Error fetching user details:', error);
+      }
+    };
+
     fetchUserDetails();
   }, []);
-  
 
-  // Fetch user details from local storage
-  const fetchUserDetails = () => {
-    const userDataString = localStorage.getItem("user");
-    if (!userDataString) return;
-
-    const userData = JSON.parse(userDataString);
-    const fullName = userData?.fullName || "User";
-    const gender = userData?.gender || "Unknown";
-    const dob = userData?.dob;
-    const userId = userData?._id;
-
-    let age = "Unknown";
-    if (dob) {
-      const birthDate = new Date(dob);
-      const today = new Date();
-      age = today.getFullYear() - birthDate.getFullYear();
-
-      // Adjust if birthday hasn't occurred yet this year
-      const monthDiff = today.getMonth() - birthDate.getMonth();
-      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
-        age--;
-      }
-    }
-
-    setUserDetails({ fullName, age, gender, userId });
-  };
+  // Handle input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setResponses({
-      ...responses,
-      [name]: value
-    });
+    setResponses({ ...responses, [name]: value });
   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setResponses((prevResponses) => ({
-      ...prevResponses,
-      [name]: value
-    }));
+  // Transform responses into API-friendly format
+  const transformResponses = () => {
+    return {
+      RIDAGEYR: userDetails.age,  // User's age
+      RIAGENDR: userDetails.gender, // Numeric gender
+      
+      // Map responses to numeric values
+      ...Object.fromEntries(
+        Object.entries(responses).map(([key, value]) => {
+          if (value === "Yes") return [key, 1];
+          if (value === "No") return [key, 0];
+
+          const numericValue = parseInt(value, 10);
+          if (!isNaN(numericValue) && numericValue >= 0 && numericValue <= 4) {
+            return [key, numericValue];
+          }
+
+          return [key, null]; // Default for unexpected values
+        })
+      )
+    };
   };
 
+  // ✅ Save Report Function
+  const saveUserDataReport = async (analysisData) => {
+    try {
+      console.log("📤 Sending Report to /save-report:", analysisData);
+
+      const response = await axios.post(
+        "http://127.0.0.1:5000/api/user-data/save-report",
+        analysisData,
+        { headers: { "Content-Type": "application/json" } }
+      );
+
+      console.log("✅ Save API Response:", response.data);
+
+    } catch (error) {
+      console.error("❌ Error saving report:", error);
+    }
+  };
+
+  // ✅ Handle form submission with saving report
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const timestamp = new Date().toISOString();
-    
-    // Validate cholesterol and glucose levels (make sure they are numbers)
-    if (isNaN(responses.cholesterolLevel) || isNaN(responses.glucoseLevel)) {
-      console.error("Invalid cholesterol or glucose levels.");
-      return; // Prevent submission if invalid
+
+    // Check if any response is missing
+    const unanswered = Object.values(responses).some(value => value.trim() === '');
+    if (unanswered) {
+      alert("⚠️ Please answer all questions before submitting.");
+      return;
     }
-  
-    const nhanesData = {
-      userid: userDetails.userId,
-      RIAGENDR: userDetails.gender === 'Male' ? 1 : (responses.gender === 'Female' ? 2 : 0), // Ensure gender value is set properly
-      RIDAGEYR: userDetails.age,
-      DR1TVD: responses.troubleSeeing === 'Severe' ? 1 : (responses.troubleSeeing === 'Mild' ? 2 : 0),
-      AUQ011: responses.troubleSeeing === 'Yes' ? 1 : 0,
-      AUQ051: responses.historyOfSurgery === 'Yes' ? 1 : 0,
-      AUQ010: responses.visionProblems === 'Yes' ? 1 : 0,
-      AUQ020: responses.cataracts === 'Yes' ? 1 : 0,
-      AUQ020A: responses.cataracts === 'Yes' ? 1 : 0, // Mapping based on user selection
-      AUQ020B: responses.glaucoma === 'Yes' ? 1 : 0,
-      AUQ020C: responses.macularDegeneration === 'Yes' ? 1 : 0,
-      AUQ020D: responses.diabeticRetinopathy === 'Yes' ? 1 : 0,
-      AUQ020E: 0, // Placeholder if there's another condition for AUQ020E
-      AUQ041: responses.visionLimitations === 'Yes' ? 1 : 0,
-      LBDLDL: responses.cholesterolLevel, // Placeholder for the actual data
-      LBXTC: responses.cholesterolLevel, // Placeholder for the actual data
-      LBXGLU: responses.glucoseLevel, // Placeholder for the actual data
-      ALQ130: responses.alcoholConsumption === 'Severe' ? 1 : (responses.alcoholConsumption === 'Mild' ? 2 : 0),
-      PAQ650: responses.physicalActivity === 'Severe' ? 1 : (responses.physicalActivity === 'Mild' ? 2 : 0),
-      SMQ040: responses.smokingStatus === 'Yes' ? 1 : 0,
-      timestamp: timestamp
+
+    // Prepare payload
+    const payload = {
+      user_id: userDetails.userId,
+      user_name: userDetails.fullName,
+      user_age: userDetails.age,
+      user_responses: transformResponses(),
+      timestamp: new Date().toISOString(),
     };
-  
-    console.log("Sending data:", nhanesData); // Log the data being sent for debugging
-  
+
+    console.log('📤 Sending payload:', payload);
+
     try {
-      const response = await axios.post('http://127.0.0.1:5000/api/user-data/analyze', nhanesData, {
-        headers: {
-          'Content-Type': 'application/json',
-        }
+      const response = await axios.post(
+        'http://127.0.0.1:5000/api/user-data/analyze',
+        payload,
+        { headers: { 'Content-Type': 'application/json' } }
+      );
+
+      console.log('✅ API Response:', response.data);
+
+      // Extract data safely
+      const { prediction = {} } = response.data || {};
+
+      // Prepare analysis data
+      const analysisData = {
+        user_id: userDetails.userId,
+        user_name: userDetails.fullName,
+        user_age: userDetails.age,
+        high_risk_probability: prediction["High Risk Probability"] || 0,
+        low_risk_probability: prediction["Low Risk Probability"] || 0,
+        risk_level: prediction["Risk Prediction"] || "Unknown",
+        detected_issues: prediction["Detected Issues"] || {},
+        insights: prediction["Insights"] || "No insights available.",
+        recommendations: prediction["Recommendations"] || "No recommendations available.",
+        timestamp: new Date().toISOString(),
+      };
+
+      // ✅ Call API to save the report in the database
+      await saveUserDataReport(analysisData);
+
+      // ✅ Navigate to analysis page with data
+      navigate('/userdataanalysis', { 
+        state: { 
+          userName: analysisData.user_name,
+          userAge: analysisData.user_age,
+          highRisk: analysisData.high_risk_probability, 
+          lowRisk: analysisData.low_risk_probability, 
+          riskLevel: analysisData.risk_level,
+          detectedIssues: analysisData.detected_issues,
+          insights: analysisData.insights,
+          recommendations: analysisData.recommendations
+        } 
       });
-  
-      // The response from axios is already parsed as JSON
-      const result = response.data;
-  
-      if (response.status === 200) {
-        console.log(result.prediction);  // Handle the prediction result here
-        // You can use the result to update the UI or show the user insights.
-      } else {
-        console.error('Error:', result.error);
-        // Optionally show an error message to the user
-      }
+
     } catch (error) {
-      console.error('Error:', error.response || error.message);  // Enhanced error logging
-      // Optionally show an error message to the user
+      console.error('❌ Error submitting data:', error);
+
+      if (error.response) {
+        alert(`🚨 Backend Error: ${error.response.data.message || 'An error occurred.'}`);
+      } else if (error.request) {
+        alert('⚠️ No response from the server. Please try again later.');
+      } else {
+        alert('❌ Failed to connect to the server. Please check your connection.');
+      }
     }
   };
-  
-
   return (
-    <div>
-      <NavBarUser />
-      <h2>Eye Health Survey</h2>
-      <form onSubmit={handleSubmit}>
+    <div className="user-data-container">
+      <NavBarUser/>
+      <div className="user-details">
+      <h2>Let's Go For a Quick Analysis</h2>
       <div>
-        <label>Do you have trouble seeing?</label>
-        <div>
-          <input
-            type="radio"
-            name="troubleSeeing"
-            value="Severe"
-            checked={responses.troubleSeeing === 'Severe'}
-            onChange={handleInputChange}
-          /> Severe
-          <input
-            type="radio"
-            name="troubleSeeing"
-            value="Mild"
-            checked={responses.troubleSeeing === 'Mild'}
-            onChange={handleInputChange}
-          /> Mild
-          <input
-            type="radio"
-            name="troubleSeeing"
-            value="No"
-            checked={responses.troubleSeeing === 'No'}
-            onChange={handleInputChange}
-          /> No
+        
+        {/* <div>
+          <strong>Full Name:</strong> {userDetails.fullName}
+        </div> */}
+       
+        
+        {/* <div>
+          <strong>Age:</strong> {userDetails.age}
+        </div> */}
+      </div>
+
+      <hr className="user-data-divider"/>
+
+      
+      <form onSubmit={handleSubmit} className="user-data-form">
+
+      {/* Eye Health Questions */}
+      <h3>👀 Eye Health Assessment</h3>
+
+      {/* Screen & Light Exposure */}
+      <div>
+        <label>How often do you use digital screens for long hours without breaks?</label><br />
+        <div className="radio-group">
+          {[ "No Issues", "Mild", "Sometimes", "Often", "Always" ].map((label, index) => (
+            <label key={index}>
+              <input type="radio" name="OSQ010A" value={index} onChange={handleInputChange} /> {label}
+            </label>
+          ))}
         </div>
       </div>
 
       <div>
-        <label>Have you had any eye surgery?</label>
-        <div>
-          <input
-            type="radio"
-            name="historyOfSurgery"
-            value="Yes"
-            checked={responses.historyOfSurgery === 'Yes'}
-            onChange={handleInputChange}
-          /> Yes
-          <input
-            type="radio"
-            name="historyOfSurgery"
-            value="No"
-            checked={responses.historyOfSurgery === 'No'}
-            onChange={handleInputChange}
-          /> No
+        <label>How frequently are you exposed to bright lights (e.g., sunlight, LED screens, night driving)?</label><br />
+        <div className="radio-group">
+          {[ "No Issues", "Mild", "Sometimes", "Often", "Always" ].map((label, index) => (
+            <label key={index}>
+              <input type="radio" name="OSQ010B" value={index} onChange={handleInputChange} /> {label}
+            </label>
+          ))}
         </div>
       </div>
 
       <div>
-        <label>Do you have any vision problems?</label>
-        <div>
-          <input
-            type="radio"
-            name="visionProblems"
-            value="Yes"
-            checked={responses.visionProblems === 'Yes'}
-            onChange={handleInputChange}
-          /> Yes
-          <input
-            type="radio"
-            name="visionProblems"
-            value="No"
-            checked={responses.visionProblems === 'No'}
-            onChange={handleInputChange}
-          /> No
+        <label>Do you regularly work in dusty, smoky, or chemically intense environments without eye protection?</label><br />
+        <div className="radio-group">
+          {[ "No Issues", "Mild", "Sometimes", "Often", "Always" ].map((label, index) => (
+            <label key={index}>
+              <input type="radio" name="OSQ010C" value={index} onChange={handleInputChange} /> {label}
+            </label>
+          ))}
+        </div>
+      </div>
+
+      {/* Lifestyle & Habits */}
+      <h3>🚬 Lifestyle & Habits</h3>
+
+      <div>
+        <label>Do you smoke or use tobacco products?</label><br />
+        <div className="radio-group">
+          {[ "Never", "Rarely", "Occasionally", "Often", "Regularly" ].map((label, index) => (
+            <label key={index}>
+              <input type="radio" name="OSQ020A" value={index} onChange={handleInputChange} /> {label}
+            </label>
+          ))}
         </div>
       </div>
 
       <div>
-        <label>Do you have cataracts?</label>
-        <div>
-          <input
-            type="radio"
-            name="cataracts"
-            value="Yes"
-            checked={responses.cataracts === 'Yes'}
-            onChange={handleInputChange}
-          /> Yes
-          <input
-            type="radio"
-            name="cataracts"
-            value="No"
-            checked={responses.cataracts === 'No'}
-            onChange={handleInputChange}
-          /> No
+        <label>How often do you consume alcohol?</label><br />
+        <div className="radio-group">
+          {[ "Never", "Rarely", "Occasionally", "Often", "Regularly" ].map((label, index) => (
+            <label key={index}>
+              <input type="radio" name="OSQ020B" value={index} onChange={handleInputChange} /> {label}
+            </label>
+          ))}
         </div>
       </div>
 
       <div>
-        <label>Do you have glaucoma?</label>
-        <div>
-          <input
-            type="radio"
-            name="glaucoma"
-            value="Yes"
-            checked={responses.glaucoma === 'Yes'}
-            onChange={handleInputChange}
-          /> Yes
-          <input
-            type="radio"
-            name="glaucoma"
-            value="No"
-            checked={responses.glaucoma === 'No'}
-            onChange={handleInputChange}
-          /> No
+        <label>Do you consume enough eye-healthy nutrients (Vitamin A, C, E, Omega-3)?</label><br />
+        <div className="radio-group">
+          {[ "Always", "Often", "Sometimes", "Rarely", "Never" ].map((label, index) => (
+            <label key={index}>
+              <input type="radio" name="OSQ020C" value={index} onChange={handleInputChange} /> {label}
+            </label>
+          ))}
+        </div>
+      </div>
+
+      {/* General Eye Symptoms */}
+      <h3>👁️ General Eye Symptoms</h3>
+
+      {[
+        { question: "How often do you experience headaches after reading or screen use?", name: "OHQ780A" },
+        { question: "Do you struggle with night vision, such as difficulty seeing while driving at night?", name: "OHQ780B" },
+        { question: "How frequently do you experience blurry vision?", name: "OHQ780C" },
+        { question: "Do you feel frequent eye strain or discomfort?", name: "OHQ780D" },
+        { question: "How often do you have dry or itchy eyes?", name: "OHQ780E" },
+        { question: "Do bright lights cause discomfort (light sensitivity)?", name: "OHQ780F" },
+        { question: "Do you experience excessive tearing or watery eyes?", name: "OHQ780G" },
+        { question: "How often do you struggle to focus on objects, especially when shifting from near to far?", name: "OHQ780H" },
+        { question: "Do you see halos or glare around lights at night?", name: "OHQ780I" },
+      ].map(({ question, name }, index) => (
+        <div key={index}>
+          <label>{question}</label><br />
+          <div className="radio-group">
+            {[ "Never", "Mild", "Sometimes", "Often", "Always" ].map((label, i) => (
+              <label key={i}>
+                <input type="radio" name={name} value={i} onChange={handleInputChange} /> {label}
+              </label>
+            ))}
+          </div>
+        </div>
+      ))}
+
+      {/* Critical Symptoms */}
+      <h3>⚠️ Critical Symptoms</h3>
+
+      <div>
+        <label>Have you experienced severe eye pain or discomfort recently?</label><br />
+        <div className="radio-group">
+          {[ "Never", "Mild", "Sometimes", "Often", "Severe" ].map((label, index) => (
+            <label key={index}>
+              <input type="radio" name="OHQ780J" value={index} onChange={handleInputChange} /> {label}
+            </label>
+          ))}
         </div>
       </div>
 
       <div>
-        <label>Do you have macular degeneration?</label>
-        <div>
-          <input
-            type="radio"
-            name="macularDegeneration"
-            value="Yes"
-            checked={responses.macularDegeneration === 'Yes'}
-            onChange={handleInputChange}
-          /> Yes
-          <input
-            type="radio"
-            name="macularDegeneration"
-            value="No"
-            checked={responses.macularDegeneration === 'No'}
-            onChange={handleInputChange}
-          /> No
+        <label>Do you have a personal or family history of serious eye diseases (glaucoma, cataracts, macular degeneration)?</label><br />
+        <div className="radio-group">
+          {[ "No", "Unsure", "Mild", "Significant", "Severe" ].map((label, index) => (
+            <label key={index}>
+              <input type="radio" name="OHQ780K" value={index} onChange={handleInputChange} /> {label}
+            </label>
+          ))}
         </div>
       </div>
 
-      <div>
-        <label>Do you have diabetic retinopathy?</label>
-        <div>
-          <input
-            type="radio"
-            name="diabeticRetinopathy"
-            value="Yes"
-            checked={responses.diabeticRetinopathy === 'Yes'}
-            onChange={handleInputChange}
-          /> Yes
-          <input
-            type="radio"
-            name="diabeticRetinopathy"
-            value="No"
-            checked={responses.diabeticRetinopathy === 'No'}
-            onChange={handleInputChange}
-          /> No
-        </div>
-      </div>
-
-      <div>
-        <label>Do you have vision limitations?</label>
-        <div>
-          <input
-            type="radio"
-            name="visionLimitations"
-            value="Yes"
-            checked={responses.visionLimitations === 'Yes'}
-            onChange={handleInputChange}
-          /> Yes
-          <input
-            type="radio"
-            name="visionLimitations"
-            value="No"
-            checked={responses.visionLimitations === 'No'}
-            onChange={handleInputChange}
-          /> No
-        </div>
-      </div>
-
-      <div>
-        <label>Cholesterol Level (mg/dL)</label>
-        <input
-          type="number"
-          name="cholesterolLevel"
-          value={responses.cholesterolLevel}
-          onChange={handleInputChange}
-        />
-      </div>
-
-      <div>
-        <label>Glucose Level (mg/dL)</label>
-        <input
-          type="number"
-          name="glucoseLevel"
-          value={responses.glucoseLevel}
-          onChange={handleInputChange}
-        />
-      </div>
-
-      <div>
-        <label>Alcohol Consumption</label>
-        <div>
-          <input
-            type="radio"
-            name="alcoholConsumption"
-            value="Severe"
-            checked={responses.alcoholConsumption === 'Severe'}
-            onChange={handleInputChange}
-          /> Severe
-          <input
-            type="radio"
-            name="alcoholConsumption"
-            value="Mild"
-            checked={responses.alcoholConsumption === 'Mild'}
-            onChange={handleInputChange}
-          /> Mild
-          <input
-            type="radio"
-            name="alcoholConsumption"
-            value="None"
-            checked={responses.alcoholConsumption === 'None'}
-            onChange={handleInputChange}
-          /> None
-        </div>
-      </div>
-
-      <div>
-        <label>Physical Activity</label>
-        <div>
-          <input
-            type="radio"
-            name="physicalActivity"
-            value="Severe"
-            checked={responses.physicalActivity === 'Severe'}
-            onChange={handleInputChange}
-          /> Severe
-          <input
-            type="radio"
-            name="physicalActivity"
-            value="Mild"
-            checked={responses.physicalActivity === 'Mild'}
-            onChange={handleInputChange}
-          /> Mild
-          <input
-            type="radio"
-            name="physicalActivity"
-            value="None"
-            checked={responses.physicalActivity === 'None'}
-            onChange={handleInputChange}
-          /> None
-        </div>
-      </div>
-
-      <div>
-        <label>Do you smoke?</label>
-        <div>
-          <input
-            type="radio"
-            name="smokingStatus"
-            value="Yes"
-            checked={responses.smokingStatus === 'Yes'}
-            onChange={handleInputChange}
-          /> Yes
-          <input
-            type="radio"
-            name="smokingStatus"
-            value="No"
-            checked={responses.smokingStatus === 'No'}
-            onChange={handleInputChange}
-          /> No
-        </div>
-      </div>
-
-      <button type="submit">Submit</button>
+      {/* Submit Button */}
+      <center>
+        <button type="submit" className="user-data-submit-button">Submit</button>
+      </center>
     </form>
+      </div>
     </div>
   );
 };

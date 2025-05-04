@@ -1,0 +1,152 @@
+/* UserDataAnalysis.css */
+
+/* Main container for the analysis page */
+.user-data-analysis-container {
+    max-width: 1000px;
+    margin: 90px auto 20px auto;
+    padding: 25px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+    font-family: 'Arial', sans-serif;
+}
+
+/* Page heading */
+.user-data-analysis-container h2 {
+    text-align: center;
+    color: #2c3e50;
+    font-size: 28px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 10px;
+}
+
+/* Section headings */
+.user-data-analysis-container h3 {
+    color: #34495e;
+    font-size: 22px;
+    margin-top: 25px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 5px;
+}
+
+/* General text styling */
+.user-data-analysis-container div {
+    margin-bottom: 12px;
+    font-size: 18px;
+    color: #555;
+    line-height: 1.6;
+}
+
+.user-data-analysis-container strong {
+    color: #222;
+}
+
+/* Risk Prediction Styling */
+.risk-section {
+    background: #f5f5f5;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+/* Color-coded risk levels */
+.risk-high {
+    color: red;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.risk-low {
+    color: green;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.risk-unknown {
+    color: gray;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+/* Insights styling */
+.insights-section {
+    background: #fdf2d1;
+    padding: 15px;
+    border-left: 5px solid #f39c12;
+    border-radius: 8px;
+}
+
+/* Detected Issues */
+.issues-section {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.issue-category h4 {
+    color: #e74c3c;
+    font-size: 20px;
+    margin-bottom: 8px;
+}
+
+/* Bullet point list styling */
+.user-data-analysis-container ul {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+.user-data-analysis-container li {
+    margin-bottom: 6px;
+    font-size: 18px;
+    color: #444;
+}
+
+/* Recommendations section */
+.recommendations-section {
+    background: #eaf8e5;
+    padding: 15px;
+    border-left: 5px solid #27ae60;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+
+.download-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px; /* Space between icon and text */
+    
+    background: linear-gradient(135deg, #057f51, #17ab48);
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 20px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.download-btn:hover {
+    background: linear-gradient(135deg, #059979, #07a221);
+    transform: scale(1.05);
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.25);
+}
+
+.download-btn:active {
+    transform: scale(0.98);
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* Responsive for smaller screens */
+@media screen and (max-width: 768px) {
+    .download-btn {
+        font-size: 14px;
+        padding: 10px 16px;
+    }
+}

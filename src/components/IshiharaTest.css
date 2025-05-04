@@ -1,0 +1,76 @@
+/* Overall container styling */
+.test-container {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+  }
+  
+  /* Header styling */
+  .test-header {
+    font-size: 32px;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  /* Image container */
+  .image-container {
+    margin-bottom: 20px;
+  }
+  
+  /* Style for Ishihara images */
+  .ishihara-image {
+    width: 300px;
+    height: auto;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+  }
+  
+  /* Input box container */
+  .input-container {
+    margin-bottom: 20px;
+  }
+  
+  /* Styling for the response input box */
+  .response-input {
+    padding: 10px;
+    width: 200px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+  }
+  
+  .response-input:focus {
+    border-color: #0056b3;
+  }
+  
+  /* Submit button container */
+  .submit-container {
+    margin-top: 10px;
+  }
+  
+  /* Styling for submit button */
+  .submit-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .submit-button:hover {
+    background-color: #218838;
+  }
+  
+  /* Progress info styling */
+  .progress-info {
+    margin-top: 20px;
+    font-size: 16px;
+    color: #666;
+  }
+  

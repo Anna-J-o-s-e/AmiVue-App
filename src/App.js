@@ -21,6 +21,13 @@ import TakeATest from './components/TakeATest';
 import VisualAcuityTest from './components/VisualAcuityTest';
 import VisualAcuityAnalysis from './components/VisualAcuityAnalysis';
 import UserData from './components/UserData';
+import UserDataAnalysis from './components/UserDataAnalysis';
+import ViewUsers from './components/ViewUsers';
+import ViewProfessionals from './components/ViewProfessionals';
+import ViewFeedback from './components/ViewFeedback';
+import Feedback from './components/Feedback';
+import FeedbackPro from './components/FeedbackPro';
+import IshiharaTest from './components/IshiharaTest';
 
 
 
@@ -49,6 +56,13 @@ function App() {
       <Route path="/visualacuitytest" element={<VisualAcuityTest/>} />
       <Route path="/visualacuityanalysis" element={<VisualAcuityAnalysis/>} />
       <Route path='/userdata' element={<UserData/>}/>
+      <Route path='/userdataanalysis' element={<UserDataAnalysis/>}/>
+      <Route path='/viewusers' element={<ViewUsers/>}/>
+      <Route path='/viewprofessionals' element={<ViewProfessionals/>}/>
+      <Route path='/feedback' element={<Feedback/>}/>
+      <Route path='/viewfeedback' element={<ViewFeedback/>}/>
+      <Route path='/feedbackpro' element={<FeedbackPro/>}/>
+      <Route path='/ishiharatest' element={<IshiharaTest/>}/>
       </Routes></BrowserRouter>
       {/* <ProfessionalSignUp/> */}
       {/* <Chat/> */}

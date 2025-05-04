@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import './ProffessionalSignUp.css';
+import NavBarAdmin from './NavBarAdmin';
 
 const ProfessionalSignUp = () => {
   const [data, setData] = useState({
@@ -125,9 +126,12 @@ const ProfessionalSignUp = () => {
   };
 
   return (
+    <div>
+      <NavBarAdmin/>
+   
     <div className="proffessional-signup-container">
       <div className="signup-box">
-        <h2 className="signup-title">Create Your Professional Account</h2>
+        <h2 className="signup-title">Create Professional Account</h2>
         <p className="signup-subtitle">Join us and contribute to better eye health management</p>
 
         <div className="profile-picture-container">
@@ -293,16 +297,17 @@ const ProfessionalSignUp = () => {
             <br/>
             <br/>
             <label>
-              I agree to the Health Data Usage Policy
+              Health Data Usage Policy
               &nbsp;
               <span className="know-more-link" onClick={toggleModal}>Know More</span>
             </label>
             {errors.agreePolicy && <p className="error-message">{errors.agreePolicy}</p>}
           </div>
 
-          <button type="submit" className="signup-btn">Sign Up</button>
+          <button type="submit" className="signup-btn">Register</button>
         </form>
       </div>
+      
 
       {showModal && (
         <div className="modal-overlay">
@@ -345,6 +350,7 @@ We may update this privacy policy from time to time. When we do, we will post th
           </div>
         </div>
       )}
+    </div>
     </div>
   );
 };

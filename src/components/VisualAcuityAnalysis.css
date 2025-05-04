@@ -71,7 +71,7 @@
 }
 
 /* Download button styling */
-.visual-acuity-analysis .download-btn {
+.visual-acuity-analysis .download-button {
     display: block;
     width: 200px;
     margin: 20px auto;
@@ -87,7 +87,7 @@
     transition: background 0.3s ease;
 }
 
-.visual-acuity-analysis .download-btn:hover {
+.visual-acuity-analysis .download-button:hover {
     background-color: #0b6183;
 }
 

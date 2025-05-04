@@ -1,0 +1,80 @@
+/* UserDataReports.css */
+
+.userdata-reports-container {
+    background: linear-gradient(to right, #e0f7fa, #b2dfdb); /* Light blue-green gradient */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    max-width: 90%;
+  }
+  
+  .userdata-loading,
+  .userdata-error,
+  .userdata-no-reports {
+    text-align: center;
+    font-size: 18px;
+    color: #555;
+  }
+  
+  .userdata-reports-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 12px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.7); /* Slight transparency */
+    box-shadow: 0px 5px 12px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(3px); /* Soft blur for enhanced visibility */
+  }
+  
+  .userdata-reports-table th,
+  .userdata-reports-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+    
+  }
+  
+  .userdata-reports-table th {
+    background: rgba(0, 121, 107, 0.8); /* Dark Teal with slight transparency */
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  .userdata-risk-low {
+    color: green;
+  }
+  
+  .userdata-risk-moderate {
+    color: orange;
+  }
+  
+  .userdata-risk-high {
+    color: red;
+  }
+  
+  .userdata-detected-issues {
+    max-width: 300px;
+    word-wrap: break-word;
+    font-size: 14px;
+    color: #333;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .userdata-reports-container {
+      max-width: 100%;
+      padding: 15px;
+    }
+  
+    .userdata-reports-table th,
+    .userdata-reports-table td {
+      padding: 8px;
+      font-size: 14px;
+    }
+  }
+  

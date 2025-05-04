@@ -1,0 +1,128 @@
+.view-users-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+    text-align: center;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.view-users-title {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #2c3e50;
+    text-transform: uppercase;
+    margin-top: 90px;
+}
+
+.view-users-loading,
+.view-users-empty {
+    font-size: 18px;
+    color: #7f8c8d;
+    font-style: italic;
+}
+
+/* Table Styling */
+.view-users-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.view-users-table th,
+.view-users-table td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.view-users-table th {
+    background-color: #3498db;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.view-users-table tbody tr {
+    transition: background 0.3s ease-in-out;
+}
+
+.view-users-table tbody tr:hover {
+    background-color: #f2f6fc;
+}
+
+/* Alternate Row Styling */
+.view-users-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* Profile Picture */
+.view-users-profile-pic {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #3498db;
+    transition: transform 0.3s ease-in-out;
+}
+
+.view-users-profile-pic:hover {
+    transform: scale(1.1);
+}
+
+/* Status Styling */
+.status-active {
+    color: #27ae60;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background: rgba(39, 174, 96, 0.1);
+}
+
+.status-inactive {
+    color: #e74c3c;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background: rgba(231, 76, 60, 0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .view-users-container {
+        width: 100%;
+        padding: 15px;
+    }
+
+    .view-users-table th,
+    .view-users-table td {
+        padding: 8px;
+        font-size: 14px;
+    }
+
+    .view-users-profile-pic {
+        width: 40px;
+        height: 40px;
+    }
+}
+.delete-btn {
+    background-color: #d9534f; /* Bootstrap-like danger color */
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.3s ease;
+}
+
+.delete-btn:hover {
+    background-color: #c9302c;
+}

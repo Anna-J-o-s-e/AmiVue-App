@@ -1,103 +1,93 @@
-/* TakeATest.css - Ensure styles only affect this page */
+/* Center the container */
 .take-a-test-container {
-    padding: 40px 24px;
-    max-width: 1200px;
-    margin: 0 auto;
-    text-align: center;
-    background: #f8fafc;
-    border-radius: 12px;
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-    margin-top: 150px;
-  }
-  
-  .take-a-test-heading {
-    font-size: 2rem;
-    font-weight: 700;
-    margin-bottom: 1.5rem;
-    color: #1e293b;
-  }
-  
-  .take-a-test-description {
-    font-size: 1.2rem;
-    color: #475569;
-    margin-bottom: 2.5rem;
-  }
-  
-  .take-a-test-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 20px;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  @media (min-width: 768px) {
-    .take-a-test-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-  
-  .take-a-test-card {
-    background: rgba(204, 237, 239, 0.132);
-    border: none;
-    padding: 24px;
-    border-radius: 16px;
-    box-shadow: 0px 6px 14px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease-in-out;
-    position: relative;
-    overflow: hidden;
-  }
-  
-  .take-a-test-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.15);
-  }
-  
-  .take-a-test-card::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 5px;
-    background: linear-gradient(to right, #206366, #06b6d4);
-    transform: scaleX(0);
-    transition: transform 0.3s ease-in-out;
-  }
-  
-  .take-a-test-card:hover::before {
-    transform: scaleX(1);
-  }
-  
-  .take-a-test-title {
-    font-size: 1.5rem;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    color: #334155;
-  }
-  
-  .take-a-test-description-text {
-    font-size: 1rem;
-    color: #64748b;
-    margin-bottom: 1.2rem;
-  }
-  
-  .take-a-test-button {
-    display: inline-block;
-    background: linear-gradient(135deg, #206366, #0ca8c4d4);
-    color: white;
-    padding: 12px 20px;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: 600;
-    text-align: center;
-    transition: all 0.3s ease-in-out;
-    text-decoration: none;
-  }
-  
-  .take-a-test-button:hover {
-    background: linear-gradient(135deg, #46c8e598, #0891b2);
-    transform: scale(1.05);
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-  }
-  
+  padding: 40px 24px;
+  max-width: 1100px; /* Reduce width for a single centered card */
+  margin: 150px auto 0 auto; /* Center horizontally */
+  text-align: center;
+  background: #f8fafc;
+  border-radius: 12px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Title Styling */
+.take-a-test-heading {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: #1e293b;
+}
+
+.take-a-test-description {
+  font-size: 1.2rem;
+  color: #475569;
+  margin-bottom: 2.5rem;
+}
+
+.take-a-test-grid {
+  display: flex;
+  justify-content: center;   /* Centers the cards horizontally */
+  align-items: center;       /* Centers the cards vertically */
+  gap: 20px;                 /* Adds space between the cards */
+}
+
+.instructions ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+/* Card Styling */
+.take-a-test-card {
+  background: rgba(204, 237, 239, 0.132);
+  border: none;
+  padding: 24px;
+  border-radius: 16px;
+  box-shadow: 0px 6px 14px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-in-out;
+  position: relative;
+  overflow: hidden;
+  max-width: 600px; /* Adjust width */
+  width: 100%;
+  text-align: center;
+}
+
+/* Card Hover Effect */
+.take-a-test-card:hover {
+  background: linear-gradient(135deg, #46c8e517, #0890b25b);
+  transform: translateY(-5px);
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Title inside the card */
+.take-a-test-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #334155;
+}
+
+/* Description text inside the card */
+.take-a-test-description-text {
+  font-size: 1rem;
+  color: #64748b;
+  margin-bottom: 1.2rem;
+}
+
+/* Button Styling */
+.take-a-test-button {
+  display: inline-block;
+  background: linear-gradient(135deg, #206366, #0ca8c4d4);
+  color: white;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: center;
+  transition: all 0.3s ease-in-out;
+  text-decoration: none;
+}
+
+.take-a-test-button:hover {
+  background: linear-gradient(135deg, #46c8e598, #0891b2);
+  transform: scale(1.05);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}

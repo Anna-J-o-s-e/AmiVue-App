@@ -1,0 +1,110 @@
+/* VisualAcuityReports.css */
+
+/* Main container with green-blue gradient */
+.reports-container {
+    max-width: 90%;
+    margin: 40px auto;
+    padding: 20px;
+    background: linear-gradient(to right, #e0f7fa, #b2dfdb); /* Light blue-green gradient */
+    border-radius: 15px;
+    box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.15);
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Title */
+.reports-title {
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+    color: #00796b; /* Dark Teal */
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Loading, Error, No Reports Messages */
+.loading, .error, .no-reports {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 12px;
+    border-radius: 8px;
+}
+
+.loading {
+    color: #fbc02d; /* Yellow */
+}
+
+.error {
+    color: #d32f2f; /* Red */
+    background: #ffebee; /* Light red background */
+}
+
+.no-reports {
+    color: #00796b;
+    background: #e0f2f1;
+}
+
+/* Table Styling */
+.reports-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 12px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.7); /* Slight transparency */
+    box-shadow: 0px 5px 12px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(3px); /* Soft blur for enhanced visibility */
+}
+
+/* Table Header */
+.reports-table th {
+    background: rgba(0, 121, 107, 0.8); /* Dark Teal with slight transparency */
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Table Cells */
+.reports-table th, .reports-table td {
+    padding: 14px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+/* Alternating Row Colors */
+.reports-table tr:nth-child(even) {
+    background: #e0f2f1; /* Light Green-Blue */
+}
+
+.reports-table tr:hover {
+    background: #d3f1ee; /* Softer green-blue hover effect */
+    transition: 0.3s ease-in-out;
+}
+
+/* Insights List */
+.reports-table ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.reports-table ul li {
+    font-size: 14px;
+    font-weight: 500;
+    color: #004d40; /* Dark Green */
+    padding: 4px 0;
+}
+
+/* Fade-in Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

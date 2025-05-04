@@ -233,3 +233,11 @@
 .signup-container .login-link:hover {
   color: #1a9c9e;
 }
+.error-message {
+  color: white;  /* Change text color to white */
+  font-size: 14px;
+  margin-top: 5px;
+  background-color: rgba(255, 0, 0, 0.6); /* Optional: Add a red background for visibility */
+  padding: 5px;
+  border-radius: 5px;
+}

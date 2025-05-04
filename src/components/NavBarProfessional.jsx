@@ -113,11 +113,17 @@ const NavBarProfessional = () => {
       <div className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
         <nav className="sidebar-nav">
           <button className="nav-item" onClick={() => { navigate('/professionalprofile'); setSidebarOpen(false); }}>Profile</button>
-          <button className="nav-item" onClick={() => { navigate('/appointments'); setSidebarOpen(false); }}>Appointments</button>
-          <button className="nav-item" onClick={() => { navigate('/patient-history'); setSidebarOpen(false); }}>Patient History</button>
-          <button className="nav-item" onClick={() => { navigate('/consultations'); setSidebarOpen(false); }}>Consultations</button>
+          <button className="nav-item" onClick={() => { navigate('/userdata'); setSidebarOpen(false); }}>Basic Analysis</button>
+          <button className="nav-item" onClick={() => { navigate('/takeatest'); setSidebarOpen(false); }}>Take a Test</button>
+          {/* <button className="nav-item" onClick={() => { navigate('/consultations'); setSidebarOpen(false); }}>Consultations</button> */}
           <button className="nav-item" onClick={() => { navigate('/professionalchatlist'); setSidebarOpen(false); }}>Chat</button>
           <button className="nav-item" onClick={() => { navigate('/simulation'); setSidebarOpen(false); }}>Simulation</button>
+          <button className="nav-item" onClick={() => { 
+      navigate('/feedbackpro'); 
+      setSidebarOpen(false);
+    }}>
+      Feedback
+    </button>
         </nav>
       </div>
 

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
+import moment from "moment-timezone"; // ✅ Import moment-timezone
 import NavBarUser from "./NavBarUser";
 import "./VisualAcuityAnalysis.css";
 
@@ -43,6 +44,45 @@ const VisualAcuityAnalysis = () => {
         setUserDetails({ fullName, age });
     };
 
+    // ✅ Save Visual Acuity Report to Backend
+    const saveVisualAcuityReport = async (analysisData) => {
+        try {
+            const userDataString = localStorage.getItem("user");
+            if (!userDataString) {
+                console.error("User not logged in.");
+                return;
+            }
+
+            const userData = JSON.parse(userDataString);
+            const userId = userData?._id; // Extract user ID
+
+            if (!userId) {
+                console.error("User ID not found.");
+                return;
+            }
+
+            // Attach user ID and ensure insights are included
+            const reportData = { 
+                ...analysisData, 
+                user_id: userId, 
+                insights: analysisData.insights || [] // Ensure insights are included
+            };
+
+            const response = await fetch("http://localhost:5000/api/visual-acuity/save-report", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(reportData),
+            });
+
+            const result = await response.json();
+            console.log("Report saved:", result);
+        } catch (error) {
+            console.error("Error saving report:", error);
+        }
+    };
+
     const fetchLatestAnalysis = async () => {
         try {
             const userDataString = localStorage.getItem("user");
@@ -66,6 +106,7 @@ const VisualAcuityAnalysis = () => {
                 setAnalysis(null);
             } else {
                 setAnalysis(response.data);
+                saveVisualAcuityReport(response.data);
             }
         } catch (error) {
             console.error("Error fetching analysis:", error);
@@ -73,6 +114,13 @@ const VisualAcuityAnalysis = () => {
         } finally {
             setLoading(false);
         }
+    };
+
+    // ✅ Convert UTC timestamp to user's local time zone
+    const formatDate = (timestamp) => {
+        return moment.utc(timestamp) // Parse as UTC
+            .tz(moment.tz.guess()) // Convert to user's local timezone
+            .format("MM/DD/YYYY, hh:mm:ss A"); // Format properly
     };
 
     const downloadPDF = () => {
@@ -94,73 +142,74 @@ const VisualAcuityAnalysis = () => {
         <div>
             <NavBarUser />
             <div className="visual-acuity-analysis">
-            <div className="analysis-container">
-                <h1 className="analysis-title">Visual Acuity Analysis</h1>
+                <div className="analysis-container">
+                    <h1 className="analysis-title">Visual Acuity Analysis</h1>
 
-                {loading ? (
-                    <p>Loading analysis...</p>
-                ) : analysis ? (
-                    <div>
-                        <div className="analysis-content" ref={reportRef}>
-                            {/* Display User Name & Age in UI */}
-                            <p><strong>Name:</strong> {userDetails.fullName}</p>
-                            <p><strong>Age:</strong> {userDetails.age}</p>
+                    {loading ? (
+                        <p>Loading analysis...</p>
+                    ) : analysis ? (
+                        <div>
+                            <div className="analysis-content" ref={reportRef}>
+                                {/* Display User Name & Age in UI */}
+                                <p><strong>Name:</strong> {userDetails.fullName}</p>
+                                <p><strong>Age:</strong> {userDetails.age}</p>
+                                <p><strong>Test Date:</strong> {formatDate(analysis.timestamp)}</p> {/* ✅ Fixed timestamp conversion */}
 
-                            <p><strong>Total Attempts:</strong> {analysis.total_attempts}</p>
-                            <p><strong>Correct Answers:</strong> {analysis.correct_answers}</p>
-                            <p><strong>Accuracy:</strong> {analysis.accuracy}%</p>
-                            <p><strong>Average Response Time:</strong> {analysis.avg_response_time} sec</p>
-                            <p><strong>Fastest Response:</strong> {analysis.fastest_response} sec</p>
-                            <p><strong>Slowest Response:</strong> {analysis.slowest_response} sec</p>
+                                <p><strong>Total Attempts:</strong> {analysis.total_attempts}</p>
+                                <p><strong>Correct Answers:</strong> {analysis.correct_answers}</p>
+                                <p><strong>Accuracy:</strong> {analysis.accuracy}%</p>
+                                <p><strong>Average Response Time:</strong> {analysis.avg_response_time} sec</p>
+                                <p><strong>Fastest Response:</strong> {analysis.fastest_response} sec</p>
+                                <p><strong>Slowest Response:</strong> {analysis.slowest_response} sec</p>
 
-                            {analysis.size_performance && Object.keys(analysis.size_performance).length > 0 ? (
-                                <>
-                                    <h2>Performance by Digit Size:</h2>
-                                    <table className="analysis-table">
-                                        <thead>
-                                            <tr>
-                                                <th>Digit Size</th>
-                                                <th>Accuracy (%)</th>
-                                                <th>Correct</th>
-                                                <th>Total Attempts</th>
-                                                <th>Avg Response Time (sec)</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {Object.entries(analysis.size_performance).map(([size, data], index) => (
-                                                <tr key={index}>
-                                                    <td>{size}px</td>
-                                                    <td>{data.accuracy}%</td>
-                                                    <td>{data.correct}</td>
-                                                    <td>{data.total}</td>
-                                                    <td>{data.avg_response_time}</td>
+                                {analysis.size_performance && Object.keys(analysis.size_performance).length > 0 ? (
+                                    <>
+                                        <h2>Performance by Digit Size:</h2>
+                                        <table className="analysis-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Digit Size</th>
+                                                    <th>Accuracy (%)</th>
+                                                    <th>Correct</th>
+                                                    <th>Total Attempts</th>
+                                                    <th>Avg Response Time (sec)</th>
                                                 </tr>
-                                            ))}
-                                        </tbody>
-                                    </table>
-                                </>
-                            ) : (
-                                <p>No size-based performance data available.</p>
-                            )}
+                                            </thead>
+                                            <tbody>
+                                                {Object.entries(analysis.size_performance).map(([size, data], index) => (
+                                                    <tr key={index}>
+                                                        <td>{size}px</td>
+                                                        <td>{data.accuracy}%</td>
+                                                        <td>{data.correct}</td>
+                                                        <td>{data.total}</td>
+                                                        <td>{data.avg_response_time}</td>
+                                                    </tr>
+                                                ))}
+                                            </tbody>
+                                        </table>
+                                    </>
+                                ) : (
+                                    <p>No size-based performance data available.</p>
+                                )}
 
-                            <h2>Vision Insights:</h2>
-                            <p><strong>Inferences:</strong> {analysis.vision_issues}</p>
-                            <ul>
-                                {analysis.insights.map((insight, index) => (
-                                    <li key={index}>{insight}</li>
-                                ))}
-                            </ul>
+                                <h2>Vision Insights:</h2>
+                                <p><strong>Inferences:</strong> {analysis.vision_issues}</p>
+                                <ul>
+                                    {analysis.insights.map((insight, index) => (
+                                        <li key={index}>{insight}</li>
+                                    ))}
+                                </ul>
+                            </div>
+
+                            {/* Button to Download Report */}
+                            <button className="download-button" onClick={downloadPDF}>
+                                Download Report (PDF)
+                            </button>
                         </div>
-
-                        {/* Button to Download Report */}
-                        <button className="download-btn" onClick={downloadPDF}>
-                            Download Report (PDF)
-                        </button>
-                    </div>
-                ) : (
-                    <p>No recent test analysis available.</p>
-                )}
-            </div>
+                    ) : (
+                        <p>No recent test analysis available.</p>
+                    )}
+                </div>
             </div>
         </div>
     );

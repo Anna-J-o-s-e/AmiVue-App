@@ -131,12 +131,12 @@ const NavBarUser = () => {
       Profile
     </button>
     
-    <button className="nav-item" onClick={() => { 
+    {/* <button className="nav-item" onClick={() => { 
       navigate('/history'); 
       setSidebarOpen(false);
     }}>
       History
-    </button>
+    </button> */}
     
     <button className="nav-item" onClick={() => { 
       navigate('/userdata'); 
@@ -165,6 +165,13 @@ const NavBarUser = () => {
       setSidebarOpen(false);
     }}>
       Simulation
+    </button>
+
+    <button className="nav-item" onClick={() => { 
+      navigate('/feedback'); 
+      setSidebarOpen(false);
+    }}>
+      Feedback
     </button>
   </nav>
       </div>
